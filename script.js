@@ -474,4 +474,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
+
+    // 7. Music Logic
+    const bgMusic = document.getElementById('bg-music');
+    const musicToggle = document.getElementById('music-toggle');
+    if (bgMusic && musicToggle) {
+        musicToggle.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicToggle.classList.add('playing');
+                musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
+            } else {
+                bgMusic.pause();
+                musicToggle.classList.remove('playing');
+                musicToggle.innerHTML = '<span class="music-icon">🎵</span>';
+            }
+        });
+        
+        document.body.addEventListener('click', function initAudio() {
+            bgMusic.play().then(() => {
+                musicToggle.classList.add('playing');
+                musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
+            }).catch(e => console.log("Autoplay prevented"));
+            document.body.removeEventListener('click', initAudio);
+        }, { once: true });
+    }
 });
