@@ -51,11 +51,15 @@ document.addEventListener('DOMContentLoaded', () => {
             envelopeTrigger.classList.add('opening');
 
             // Play background music automatically upon opening
-            if (bgMusic) {
-                bgMusic.volume = 0.5;
-                bgMusic.play().then(() => {
-                    isPlaying = true;
-                    if (musicPlayer) musicPlayer.classList.add('playing');
+            const autoMusic = document.getElementById('bg-music');
+            const autoMusicToggle = document.getElementById('music-toggle');
+            if (autoMusic) {
+                autoMusic.volume = 0.5;
+                autoMusic.play().then(() => {
+                    if (autoMusicToggle) {
+                        autoMusicToggle.classList.add('playing');
+                        autoMusicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
+                    }
                 }).catch(e => console.log("Music play blocked:", e));
             }
 
