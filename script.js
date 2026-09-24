@@ -112,36 +112,67 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Guestbook Logic (Firebase Firestore)
     const wishForm = document.getElementById('wish-form');
     const wishesList = document.getElementById('wishes-list');
-    const paginationControls = document.getElementById('pagination-controls');
-    const btnPrev = document.getElementById('btn-prev');
-    const btnNext = document.getElementById('btn-next');
-    const pageInfo = document.getElementById('page-info');
-
+    const wishesCountEl = document.getElementById('wishes-count');
+    
     let allWishes = [];
-    let currentPage = 1;
-    const wishesPerPage = 5;
 
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('vi-VN', {
-            year: 'numeric', month: 'short', day: 'numeric',
-            hour: '2-digit', minute: '2-digit'
+    // Emoji Selector Logic
+    const emojiBtns = document.querySelectorAll('.emoji-btn');
+    let selectedEmojis = ['🎓']; // Default
+
+    emojiBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const emoji = btn.dataset.emoji;
+            if (btn.classList.contains('active')) {
+                // Cannot deselect if it's the only one
+                if (selectedEmojis.length > 1) {
+                    btn.classList.remove('active');
+                    selectedEmojis = selectedEmojis.filter(e => e !== emoji);
+                }
+            } else {
+                if (selectedEmojis.length < 3) { // limit to 3 max
+                    btn.classList.add('active');
+                    selectedEmojis.push(emoji);
+                } else {
+                    // Remove first added to add new
+                    const firstEmoji = selectedEmojis.shift();
+                    const firstBtn = document.querySelector(`.emoji-btn[data-emoji="${firstEmoji}"]`);
+                    if(firstBtn) firstBtn.classList.remove('active');
+                    btn.classList.add('active');
+                    selectedEmojis.push(emoji);
+                }
+            }
         });
+    });
+
+    function getInitials(name) {
+        const parts = name.trim().split(' ');
+        if (parts.length >= 2) {
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+        }
+        return name.substring(0, 2).toUpperCase();
     }
 
-    function updatePagination() {
-        const totalPages = Math.ceil(allWishes.length / wishesPerPage) || 1;
-        
-        pageInfo.textContent = `Trang ${currentPage} / ${totalPages}`;
-        
-        btnPrev.disabled = currentPage === 1;
-        btnNext.disabled = currentPage === totalPages;
+    function timeAgo(dateString) {
+        const date = new Date(dateString);
+        const now = new Date();
+        const diffMs = now - date;
+        const diffSecs = Math.floor(diffMs / 1000);
+        const diffMins = Math.floor(diffSecs / 60);
+        const diffHours = Math.floor(diffMins / 60);
+        const diffDays = Math.floor(diffHours / 24);
 
-        if (totalPages <= 1) {
-            paginationControls.style.display = 'none';
-        } else {
-            paginationControls.style.display = 'flex';
-        }
+        if (diffSecs < 60) return "Vừa xong";
+        if (diffMins < 60) return `${diffMins} phút trước`;
+        if (diffHours < 24) return `${diffHours} giờ trước`;
+        if (diffDays < 7) return `${diffDays} ngày trước`;
+        
+        return date.toLocaleDateString('vi-VN', { year: 'numeric', month: '2-digit', day: '2-digit' });
+    }
+
+    function formatFullDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'}) + ' • ' + date.toLocaleDateString('vi-VN');
     }
 
     const REACTION_TYPES = {
@@ -183,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isRemoving) {
                 allWishes[wishIndex].reactions[type] = (allWishes[wishIndex].reactions[type] || 0) + 1;
             }
-            renderWishesPage();
+            renderWishesList();
         }
 
         if (isRemoving) {
@@ -208,20 +239,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    function renderWishesPage() {
+    function renderWishesList() {
         wishesList.innerHTML = '';
+        if (wishesCountEl) wishesCountEl.textContent = `${allWishes.length} Lời chúc`;
         
         if (allWishes.length === 0) {
-            wishesList.innerHTML = '<p style="text-align:center; color:var(--clr-text-secondary)">Hãy là người đầu tiên gửi lời chúc nhé! ✨</p>';
-            if(paginationControls) paginationControls.style.display = 'none';
+            wishesList.innerHTML = '<p style="text-align:center; color:var(--clr-text-secondary); padding: 40px 0;">Hãy là người đầu tiên gửi lời chúc nhé! ✨</p>';
             return;
         }
 
-        const startIndex = (currentPage - 1) * wishesPerPage;
-        const endIndex = startIndex + wishesPerPage;
-        const wishesToShow = allWishes.slice(startIndex, endIndex);
-
-        wishesToShow.forEach(wish => {
+        allWishes.forEach(wish => {
             const wishEl = document.createElement('div');
             wishEl.className = 'wish-item';
             
@@ -245,10 +272,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const activeClass = userReaction ? 'active' : '';
             const btnIcon = userReaction ? REACTION_TYPES[userReaction] : '🤍';
 
+            const emojisDisplay = (wish.emojis || []).join(' ');
+
             wishEl.innerHTML = `
                 <div class="wish-header">
-                    <span class="wish-author">${escapeHTML(wish.name)}</span>
-                    <span class="wish-time">${formatDate(wish.time)}</span>
+                    <div class="wish-avatar">${getInitials(wish.name)}</div>
+                    <div class="wish-author-info">
+                        <span class="wish-author">${escapeHTML(wish.name)}</span>
+                        <div class="wish-time">
+                            🕒 ${formatFullDate(wish.time)} (${timeAgo(wish.time)})
+                        </div>
+                    </div>
+                    <div class="wish-selected-emojis">${emojisDisplay}</div>
                 </div>
                 <div class="wish-content">
                     "${escapeHTML(wish.message).replace(/\n/g, '<br>')}"
@@ -273,31 +308,10 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             wishesList.appendChild(wishEl);
         });
-
-        if(paginationControls) updatePagination();
-    }
-
-    if (btnPrev && btnNext) {
-        btnPrev.addEventListener('click', () => {
-            if (currentPage > 1) {
-                currentPage--;
-                renderWishesPage();
-                document.getElementById('wishes').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
-
-        btnNext.addEventListener('click', () => {
-            const totalPages = Math.ceil(allWishes.length / wishesPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                renderWishesPage();
-                document.getElementById('wishes').scrollIntoView({ behavior: 'smooth' });
-            }
-        });
     }
 
     // Real-time listener from Firestore
-    wishesList.innerHTML = '<p style="text-align:center; color:var(--clr-text-secondary)">Đang tải lời chúc... 💌</p>';
+    wishesList.innerHTML = '<p style="text-align:center; color:var(--clr-text-secondary); padding: 40px 0;">Đang tải lời chúc... 💌</p>';
     const q = query(wishesCol, orderBy("time", "desc"));
     
     onSnapshot(q, (snapshot) => {
@@ -305,16 +319,10 @@ document.addEventListener('DOMContentLoaded', () => {
         snapshot.forEach((doc) => {
             allWishes.push({ id: doc.id, ...doc.data() });
         });
-        
-        const newTotalPages = Math.ceil(allWishes.length / wishesPerPage) || 1;
-        if (currentPage > newTotalPages) {
-            currentPage = newTotalPages;
-        }
-        
-        renderWishesPage();
+        renderWishesList();
     }, (error) => {
         console.error("Lỗi khi tải lời chúc từ Firebase: ", error);
-        wishesList.innerHTML = '<p style="text-align:center; color:#D67D89">Chưa thể kết nối máy chủ Firebase. Bạn vui lòng thử lại sau nhé!</p>';
+        wishesList.innerHTML = '<p style="text-align:center; color:#D67D89; padding: 40px 0;">Chưa thể kết nối máy chủ Firebase. Bạn vui lòng thử lại sau nhé!</p>';
     });
 
     wishForm.addEventListener('submit', async (e) => {
@@ -322,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const nameInput = document.getElementById('sender-name');
         const messageInput = document.getElementById('message');
-        const submitBtn = wishForm.querySelector('.btn-primary');
+        const submitBtn = wishForm.querySelector('.btn-submit-wish');
         const originalBtnContent = submitBtn.innerHTML;
         
         const name = nameInput.value.trim();
@@ -339,6 +347,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await addDoc(wishesCol, {
                 name: name,
                 message: message,
+                emojis: selectedEmojis,
                 time: new Date().toISOString()
             });
 

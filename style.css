@@ -747,6 +747,24 @@ p, li, .location-address, .contact-text {
     margin-top: 20px;
 }
 
+/* Guestbook Form Grid Update */
+.guestbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); max-width: 1000px; margin: 0 auto; align-items: stretch; }
+@media (max-width: 768px) { .guestbook-grid { grid-template-columns: 1fr; } }
+.wish-form-wrapper, .wishes-list-wrapper { padding: var(--space-2xl); display: flex; flex-direction: column; }
+.wishes-list-wrapper { height: 600px; }
+.wishes-scroll-container { flex: 1; overflow-y: auto; padding-right: 8px; margin-bottom: 16px; }
+.wishes-scroll-container::-webkit-scrollbar { width: 6px; }
+.wishes-scroll-container::-webkit-scrollbar-track { background: rgba(214, 125, 137, 0.1); border-radius: 4px; }
+.wishes-scroll-container::-webkit-scrollbar-thumb { background: var(--clr-accent); border-radius: 4px; }
+.form-title { font-family: var(--font-heading); font-size: 1.6rem; color: var(--clr-text-primary); margin-bottom: var(--space-lg); display: flex; align-items: center; gap: 8px; }
+.wish-form-inner { display: flex; flex-direction: column; flex: 1; }
+.emoji-selector { display: flex; flex-wrap: wrap; gap: 10px; }
+.emoji-btn { padding: 8px 16px; border: 1px solid rgba(214, 125, 137, 0.3); border-radius: 20px; background: rgba(255, 255, 255, 0.5); color: var(--clr-text-secondary); font-family: var(--font-body); font-size: 0.9rem; cursor: pointer; transition: var(--transition-smooth); }
+.emoji-btn:hover { background: rgba(214, 125, 137, 0.1); }
+.emoji-btn.active { background: var(--clr-accent); color: #FFF; border-color: var(--clr-accent); box-shadow: 0 4px 10px rgba(214, 125, 137, 0.3); }
+.btn-submit-wish { margin-top: auto; width: 100%; justify-content: center; padding: 16px; border-radius: 30px; }
+.wishes-list-header { margin-bottom: var(--space-md); padding-bottom: var(--space-sm); border-bottom: 1px dashed rgba(214, 125, 137, 0.2); }
+.wishes-count { font-weight: 600; color: var(--clr-text-secondary); }
 /* Guestbook Form */
 .guestbook-container {
     max-width: 600px;
@@ -836,6 +854,55 @@ p, li, .location-address, .contact-text {
 }
 
 .wish-item {
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(214, 125, 137, 0.2);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    animation: slideUpFade 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.wish-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.wish-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.wish-author-info {
+    flex: 1;
+}
+
+.wish-time {
+    font-size: 0.8rem;
+    color: var(--clr-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.wish-selected-emojis {
+    font-size: 1.2rem;
+}
+
+/* Old styles to override */
+.wish-item-old
     background: var(--clr-surface);
     padding: var(--space-lg);
     border-radius: 16px;

@@ -236,34 +236,54 @@
         </section>
 
         <section class="wishes-section section-padding" id="wishes">
-            <div class="guestbook-container">
-                <h3 class="section-heading fade-up">Sổ Lưu Bút</h3>
-                <p class="section-subheading fade-up">Hãy để lại một vài lời nhắn gửi yêu thương cho chặng đường sắp tới của Linh&nbsp;nhé!</p>
-                
-                <form id="wish-form" class="glass-card wish-form fade-up">
-                    <div class="form-group">
-                        <label for="sender-name">Tên của bạn</label>
-                        <input type="text" id="sender-name" class="input-field" placeholder="Ví dụ: Anh H, Em N..." required>
-                    </div>
-                    <div class="form-group">
-                        <label for="message">Lời nhắn nhủ</label>
-                        <textarea id="message" rows="4" class="input-field" placeholder="Gửi gắm những lời chúc tốt đẹp nhất..." required></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary">
-                        <span>Gửi Lời Chúc</span>
-                        <span class="btn-icon">💌</span>
-                    </button>
-                </form>
+            <h3 class="section-heading fade-up">Gửi Lời Chúc Mừng</h3>
+            <p class="section-subheading fade-up">Hãy để lại những lời chúc tốt đẹp, lời nhắn nhủ thân thương tới mình trong ngày<br>lễ trọng đại này nhé!</p>
+            
+            <div class="guestbook-grid fade-up">
+                <!-- Left Column: Form -->
+                <div class="glass-card wish-form-wrapper">
+                    <h4 class="form-title">✍️ Viết Lời Chúc Của Bạn</h4>
+                    <form id="wish-form" class="wish-form-inner">
+                        <div class="form-group">
+                            <label for="sender-name">Họ và Tên của bạn *</label>
+                            <input type="text" id="sender-name" class="input-field" placeholder="Ví dụ: Nguyễn Văn A" required>
+                        </div>
+                        
+                        <div class="form-group emoji-group">
+                            <label>Chọn biểu tượng cảm xúc</label>
+                            <div class="emoji-selector" id="emoji-selector">
+                                <button type="button" class="emoji-btn active" data-emoji="🎓">🎓 Mũ Cử Nhân</button>
+                                <button type="button" class="emoji-btn" data-emoji="💐">💐 Bó Hoa</button>
+                                <button type="button" class="emoji-btn" data-emoji="🎉">🎉 Pháo Giấy</button>
+                                <button type="button" class="emoji-btn" data-emoji="🚀">🚀 Thăng Tiến</button>
+                                <button type="button" class="emoji-btn" data-emoji="🌟">🌟 Tỏa Sáng</button>
+                                <button type="button" class="emoji-btn" data-emoji="💖">💖 Yêu Thương</button>
+                            </div>
+                        </div>
 
-                <div class="wishes-timeline fade-up" id="wishes-list">
-                    <!-- Javascript generates wishes here -->
+                        <div class="form-group">
+                            <label for="message">Lời nhắn gửi *</label>
+                            <textarea id="message" rows="4" class="input-field" placeholder="Nhập lời chúc mừng tốt nghiệp chân thành của bạn tại đây..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary btn-submit-wish">
+                            <span class="btn-icon">💌</span>
+                            <span>Gửi Lời Chúc Ngay</span>
+                        </button>
+                    </form>
                 </div>
-                
-                <!-- Pagination Controls -->
-                <div class="pagination-controls fade-up" id="pagination-controls" style="display: none;">
-                    <button class="btn-page" id="btn-prev" disabled>«</button>
-                    <span class="page-info" id="page-info">Trang 1 / 1</span>
-                    <button class="btn-page" id="btn-next" disabled>»</button>
+
+                <!-- Right Column: List -->
+                <div class="glass-card wishes-list-wrapper">
+                    <div class="wishes-list-header">
+                        <span class="wishes-count" id="wishes-count">0 Lời chúc</span>
+                    </div>
+                    
+                    <div class="wishes-scroll-container">
+                        <div class="wishes-timeline" id="wishes-list">
+                            <!-- Javascript generates wishes here -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
