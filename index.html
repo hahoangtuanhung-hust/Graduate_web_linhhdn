@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lễ Tốt Nghiệp - Hà Đỗ Ngọc Linh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Mới: Font sang trọng cho thiệp (Cormorant Infant & Great Vibes) và Inter cho văn bản nhỏ -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300;400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.5">
+</head>
+<body>
+    <!-- Interactive Envelope Opening Overlay Screen -->
+    <div id="envelope-overlay" class="envelope-overlay">
+        <div class="envelope-ambient">
+            <div class="env-shape shape-a"></div>
+            <div class="env-shape shape-b"></div>
+        </div>
+
+        <div class="envelope-container" id="open-envelope-trigger">
+            <div class="envelope-wrapper">
+                <!-- Envelope Back -->
+                <div class="envelope-back"></div>
+                
+                <!-- Inner Letter Card Peeking -->
+                <div class="envelope-letter">
+                    <p class="letter-tag">THƯ MỜI LỄ TỐT&nbsp;NGHIỆP</p>
+                    <h2 class="letter-name">Hà Đỗ Ngọc&nbsp;Linh</h2>
+                    <div class="letter-line"></div>
+                    <p class="letter-sub">Bachelor of Corporate Accounting • K48</p>
+                    <p class="letter-date">26.09.2026 • ĐH Kinh Tế TP.HCM</p>
+                </div>
+
+                <!-- Envelope Front Body & Flaps -->
+                <div class="envelope-front-pocket"></div>
+                <div class="envelope-flap"></div>
+
+                <!-- Wax Seal with Ribbon -->
+                <div class="wax-seal-wrapper">
+                    <div class="seal-ribbon"></div>
+                    <div class="wax-seal">
+                        <div class="seal-inner">
+                            <span class="seal-initials">NL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tap to Open Hint -->
+            <div class="envelope-action">
+                <button class="btn-open-invitation" type="button" aria-label="Mở thư mời">
+                    <span class="pulse-sparkle">💌</span>
+                    <span class="btn-open-text">Chạm để mở thư mời</span>
+                    <span class="pulse-sparkle">✨</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Glassmorphic Navigation Bar -->
+    <header class="nav-header">
+        <nav class="navbar" id="navbar" aria-label="Menu điều hướng chính">
+            <div class="nav-container">
+                <a href="#hero" class="nav-brand" aria-label="Về đầu trang">
+                    <span class="brand-monogram">NL</span>
+                    <span class="brand-name">Ngọc Linh</span>
+                </a>
+                
+                <ul class="nav-links">
+                    <li><a href="#hero" class="nav-item active"><span class="nav-icon">🎓</span><span class="nav-text">Thư Mời</span></a></li>
+                    <li><a href="#event-details" class="nav-item"><span class="nav-icon">⏰</span><span class="nav-text">Thời Gian</span></a></li>
+                    <li><a href="#countdown" class="nav-item"><span class="nav-icon">⏳</span><span class="nav-text">Đếm Ngược</span></a></li>
+                    <li><a href="#map" class="nav-item"><span class="nav-icon">📍</span><span class="nav-text">Bản Đồ</span></a></li>
+                    <li><a href="#gallery" class="nav-item"><span class="nav-icon">📸</span><span class="nav-text">Kỷ Niệm</span></a></li>
+                    <li><a href="#wishes" class="nav-item"><span class="nav-icon">💌</span><span class="nav-text">Lời Chúc</span></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Background Elements -->
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+    
+    <!-- Music Player (Floating) -->
+    <div class="music-player" id="music-toggle" title="Bật/Tắt Nhạc">
+        <div class="disc">
+            <span class="music-icon">🎵</span>
+        </div>
+        <audio id="bg-music" loop>
+            <source src="audio/bg-music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <!-- Main Content -->
+    <main class="invitation-wrapper">
+        <header class="hero section-padding" id="hero">
+            <div class="hero-content fade-up">
+                <p class="subtitle tracking-widest">Thư Mời Tham Dự</p>
+                <h1 class="title">Lễ Tốt&nbsp;Nghiệp</h1>
+                <h2 class="name-signature">Hà Đỗ Ngọc&nbsp;Linh</h2>
+                
+                <div class="elegant-divider">
+                    <span class="diamond"></span>
+                </div>
+                
+                <div class="degree-info">
+                    <p class="degree-title">Bachelor of Corporate Accounting • K48</p>
+                    <p class="university-name">Đại học Kinh tế TP.HCM (UEH)</p>
+                </div>
+            </div>
+            
+            <div class="hero-image-container fade-up delay-1">
+                <div class="image-frame glass-effect">
+                    <img src="images/avatar.jpeg" alt="Hà Đỗ Ngọc Linh" class="hero-img">
+                </div>
+            </div>
+        </header>
+
+        <section class="event-details section-padding" id="event-details">
+            <div class="glass-card event-card fade-up">
+                <div class="invite-message">
+                    <span class="icon-hat">🎓</span>
+                    <p class="greeting">Thân mời</p>
+                    <p class="guest-highlight">Mọi người iu quý</p>
+                    <p class="greeting-sub">Đến tham dự chung vui Lễ Tốt Nghiệp cùng&nbsp;Linh</p>
+                </div>
+
+                <div class="info-layout">
+                    <div class="info-block">
+                        <span class="info-label">THỜI GIAN</span>
+                        <div class="time-primary">
+                            <span class="date">26.09.2026</span>
+                            <span class="separator">|</span>
+                            <span class="time">09:30 - 10:30</span>
+                        </div>
+                    </div>
+                    
+                    <div class="elegant-divider-vertical"></div>
+
+                    <div class="info-block">
+                        <span class="info-label">ĐỊA ĐIỂM</span>
+                        <p class="location-primary">ĐH KINH TẾ TP.HCM - CƠ SỞ A</p>
+                        <p class="location-sub">59C Đường Nguyễn Đình Chiểu,<br>Xuân Hòa, Hồ Chí Minh</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="countdown-section section-padding" id="countdown">
+            <div class="glass-card countdown-card fade-up">
+                <p class="countdown-tagline">CÙNG ĐẾM NGƯỢC ĐẾN NGÀY ĐẶC BIỆT</p>
+                <h3 class="countdown-title">Khoảnh Khắc Tốt Nghiệp</h3>
+                
+                <div class="countdown-grid" id="countdown-timer">
+                    <div class="time-card">
+                        <div class="time-number" id="cd-days">00</div>
+                        <span class="time-unit">Ngày</span>
+                    </div>
+                    <div class="time-divider">:</div>
+                    <div class="time-card">
+                        <div class="time-number" id="cd-hours">00</div>
+                        <span class="time-unit">Giờ</span>
+                    </div>
+                    <div class="time-divider">:</div>
+                    <div class="time-card">
+                        <div class="time-number" id="cd-minutes">00</div>
+                        <span class="time-unit">Phút</span>
+                    </div>
+                    <div class="time-divider">:</div>
+                    <div class="time-card highlight-sec">
+                        <div class="time-number" id="cd-seconds">00</div>
+                        <span class="time-unit">Giây</span>
+                    </div>
+                </div>
+                <p class="countdown-note" id="countdown-status">✨ Hẹn gặp mọi người vào 09:30 ngày 26.09.2026&nbsp;nhé!&nbsp;✨</p>
+            </div>
+        </section>
+
+        <!-- Location & Map Section -->
+        <section class="location-map-section section-padding" id="map">
+            <div class="glass-card map-card fade-up">
+                <span class="icon-location">📍</span>
+                <p class="location-tagline">HƯỚNG DẪN ĐƯỜNG ĐI</p>
+                <h3 class="map-title">Bản Đồ Đến Trường (UEH Cơ sở A)</h3>
+                <p class="map-address"><strong>Đại học Kinh tế TP.HCM - Cơ sở A:</strong> 59C Đường Nguyễn Đình Chiểu, Xuân Hòa, Hồ Chí Minh</p>
+                
+                <div class="gates-info">
+                    <div class="gate-item">
+                        <span class="gate-badge">Lưu ý</span>
+                        <span>Tiệc thân mật: 11:00 trở đi</span>
+                    </div>
+                </div>
+
+                <!-- Google Maps Responsive Container -->
+                <div class="map-frame-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.46781298822!2d106.69055861533418!3d10.781190692318464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3692af0001%3A0x868b4198085d38a0!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBLaW5oIHThur8gVFAuSENNIC0gQ8ahIHPhu58gQQ!5e0!3m2!1svi!2svn!4v1690000000000!5m2!1svi!2svn" 
+                        class="map-iframe" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Bản đồ Đại học Kinh tế TP.HCM - Cơ sở A">
+                    </iframe>
+                </div>
+
+                <!-- Open in Google Maps Button -->
+                <div class="map-actions">
+                    <a href="https://maps.google.com/?q=Đại+học+Kinh+tế+TP.HCM+Cơ+sở+A+59C+Nguyễn+Đình+Chiểu" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                        <span class="btn-map-icon">🗺️</span>
+                        <span>Mở chỉ đường trên Google Maps</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="memories-gallery section-padding" id="gallery">
+            <div class="polaroid-grid">
+                <div class="polaroid-card rotate-left fade-up">
+                    <div class="polaroid-img-wrapper">
+                        <img src="images/memory1.jpeg" alt="Kỉ niệm 1">
+                    </div>
+                    <p class="polaroid-caption">A chapter closed...</p>
+                </div>
+                
+                <div class="polaroid-card rotate-right fade-up delay-1">
+                    <div class="polaroid-img-wrapper">
+                        <img src="images/memory2.jpeg" alt="Kỉ niệm 2">
+                    </div>
+                    <p class="polaroid-caption">...A bright journey begins</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="wishes-section section-padding" id="wishes">
+            <div class="guestbook-container">
+                <h3 class="section-heading fade-up">Sổ Lưu Bút</h3>
+                <p class="section-subheading fade-up">Hãy để lại một vài lời nhắn gửi yêu thương cho chặng đường sắp tới của Linh&nbsp;nhé!</p>
+                
+                <form id="wish-form" class="glass-card wish-form fade-up">
+                    <div class="form-group">
+                        <label for="sender-name">Tên của bạn</label>
+                        <input type="text" id="sender-name" class="input-field" placeholder="Ví dụ: Anh H, Em N..." required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Lời nhắn nhủ</label>
+                        <textarea id="message" rows="4" class="input-field" placeholder="Gửi gắm những lời chúc tốt đẹp nhất..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        <span>Gửi Lời Chúc</span>
+                        <span class="btn-icon">💌</span>
+                    </button>
+                </form>
+
+                <div class="wishes-timeline fade-up" id="wishes-list">
+                    <!-- Javascript generates wishes here -->
+                </div>
+                
+                <!-- Pagination Controls -->
+                <div class="pagination-controls fade-up" id="pagination-controls" style="display: none;">
+                    <button class="btn-page" id="btn-prev" disabled>«</button>
+                    <span class="page-info" id="page-info">Trang 1 / 1</span>
+                    <button class="btn-page" id="btn-next" disabled>»</button>
+                </div>
+            </div>
+        </section>
+
+        <footer class="contact-footer section-padding fade-up">
+            <div class="contact-box glass-card">
+                <div class="phone-icon">📞</div>
+                <p class="contact-text">Reng: <a href="tel:0915492653" class="highlight-text">0915.492.653</a> (nlinh)</p>
+                <p class="contact-subtext">Hoặc gọi em qua Mess / Zalo nha 💕</p>
+            </div>
+            <p class="copyright">© 2026 Hà Đỗ Ngọc Linh • UEH Graduation Day</p>
+        </footer>
+    </main>
+
+    <script type="module" src="script.js?v=1.6"></script>
+</body>
+</html>
