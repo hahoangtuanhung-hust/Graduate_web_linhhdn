@@ -1119,6 +1119,9 @@ p, li, .location-address, .contact-text {
 
 .wish-selected-emojis {
     font-size: 1.2rem;
+    max-width: 60px;
+    text-align: right;
+    line-height: 1.5;
 }
 
 /* Old styles to override */
