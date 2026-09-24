@@ -662,23 +662,23 @@ p, li, .location-address, .contact-text {
 /* Hero Image */
 .hero-image-container {
     width: 100%;
-    max-width: 480px;
+    max-width: 520px;
     margin: 0 auto;
 }
 
 .image-frame {
     padding: 12px;
     background: rgba(255, 255, 255, 0.4);
-    border-radius: 200px 200px 16px 16px;
+    border-radius: 24px;
     border: 1px solid rgba(255,255,255,0.7);
     box-shadow: 0 20px 50px rgba(214, 125, 137, 0.15);
 }
 
 .hero-img {
     width: 100%;
-    border-radius: 190px 190px 8px 8px;
+    border-radius: 16px;
     display: block;
-    aspect-ratio: 3/4;
+    aspect-ratio: 1/1;
     object-fit: cover;
 }
 
@@ -878,7 +878,7 @@ p, li, .location-address, .contact-text {
 
 /* Guestbook Form Grid Update */
 .wishes-section {
-    width: min(100%, 1168px);
+    width: min(100%, 1400px);
     margin-left: 50%;
     transform: translateX(-50%);
 }
@@ -888,7 +888,7 @@ p, li, .location-address, .contact-text {
     grid-auto-rows: auto;
     gap: var(--space-2xl);
     width: 100%;
-    max-width: 1120px;
+    max-width: 1320px;
     margin: 0 auto;
     align-items: stretch;
 }
@@ -897,7 +897,7 @@ p, li, .location-address, .contact-text {
     height: auto;
     min-height: 0;
     overflow: hidden;
-    padding: var(--space-2xl);
+    padding: 24px;
     display: flex;
     flex-direction: column;
 }
@@ -2006,5 +2006,27 @@ p, li, .location-address, .contact-text {
     .envelope-wrapper {
         width: 90vw;
         height: calc(90vw * 0.7);
+    }
+}
+
+/* --- Tối ưu thêm cho Thư mời trên Mobile --- */
+@media (max-width: 480px) {
+    .letter-name {
+        font-size: 1.7rem;
+    }
+    .letter-sub {
+        font-size: 0.72rem;
+        padding: 0 4px;
+    }
+    .letter-date {
+        font-size: 0.65rem;
+    }
+    .letter-tag {
+        font-size: 0.55rem;
+    }
+    .envelope-letter {
+        padding: 8px 4px;
+        width: 92%;
+        left: 4%;
     }
 }
