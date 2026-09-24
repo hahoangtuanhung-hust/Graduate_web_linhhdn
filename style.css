@@ -257,22 +257,39 @@ p, li, .location-address, .contact-text {
 .wax-seal {
     width: 52px;
     height: 52px;
-    background: radial-gradient(circle at 35% 35%, #E58694 0%, #BA505E 70%, #8E2F3C 100%);
+    background: linear-gradient(145deg, #e697a3 0%, var(--clr-accent-dark) 100%);
     border-radius: 50%;
     box-shadow: 0 6px 18px rgba(142, 47, 60, 0.45), inset 0 2px 4px rgba(255,255,255,0.4);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed rgba(255, 235, 238, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.92);
     animation: sealGlow 2.5s infinite alternate;
 }
 
+.seal-inner {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .seal-initials {
-    font-family: var(--font-signature);
-    font-size: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    font-family: var(--font-heading);
+    font-size: 1.05rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
     color: #FFFFFF;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-    margin-top: -2px;
 }
 
 /* Envelope Open Triggered Animations */
@@ -290,11 +307,29 @@ p, li, .location-address, .contact-text {
     transform: translateY(-90px) scale(1.05);
     z-index: 10;
     box-shadow: 0 25px 45px rgba(0,0,0,0.18);
+    transition-delay: 0.22s;
+}
+
+.envelope-container.opening {
+    animation-play-state: paused;
+}
+
+.envelope-container.opening .envelope-wrapper {
+    transform: none;
+}
+
+.envelope-container.opening .envelope-action {
+    opacity: 0;
+    transform: translateY(12px);
+    pointer-events: none;
 }
 
 /* Prompt / Button */
 .envelope-action {
     margin-top: 28px;
+    position: relative;
+    z-index: 12;
+    transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .btn-open-invitation {
@@ -404,18 +439,41 @@ p, li, .location-address, .contact-text {
 }
 
 .brand-monogram {
-    width: 32px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--clr-accent), var(--clr-accent-dark));
+    position: relative;
+    flex: 0 0 38px;
+    width: 38px;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(145deg, #e697a3 0%, var(--clr-accent-dark) 100%);
     color: #FFF;
     border-radius: 50%;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-signature);
-    font-size: 1.15rem;
-    box-shadow: 0 3px 10px rgba(214, 125, 137, 0.35);
-    margin-top: -1px;
+    gap: 1px;
+    border: 2px solid rgba(255, 255, 255, 0.96);
+    box-shadow: 0 4px 12px rgba(184, 95, 107, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.28);
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.brand-monogram::after {
+    content: '';
+    position: absolute;
+    inset: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.brand-monogram span {
+    position: relative;
+    z-index: 1;
+    display: block;
 }
 
 .brand-name {
@@ -509,7 +567,7 @@ p, li, .location-address, .contact-text {
 .invitation-wrapper {
     max-width: 800px;
     margin: 0 auto;
-    overflow: hidden;
+    overflow: visible;
     padding-top: 40px; /* Offset for floating navbar */
 }
 
@@ -627,6 +685,76 @@ p, li, .location-address, .contact-text {
 .event-card {
     padding: var(--space-3xl) var(--space-xl);
     text-align: center;
+}
+
+.schedule-block {
+    max-width: 620px;
+    margin: var(--space-xl) auto;
+    padding-top: var(--space-xl);
+    border-top: 1px solid rgba(214, 125, 137, 0.24);
+}
+
+.schedule-date {
+    color: var(--clr-accent-dark);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0;
+}
+
+.schedule-title {
+    margin: 4px 0 var(--space-lg);
+    font-family: var(--font-heading);
+    font-size: 2rem;
+}
+
+.schedule-list {
+    display: grid;
+    gap: 12px;
+    margin-bottom: var(--space-lg);
+    text-align: left;
+}
+
+.schedule-item {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.7fr) 1.3fr;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 14px 16px;
+    border: 1px solid rgba(214, 125, 137, 0.2);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.52);
+}
+
+.schedule-item time {
+    color: var(--clr-accent-dark);
+    font-weight: 600;
+}
+
+.btn-calendar {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    border: 1px solid rgba(214, 125, 137, 0.35);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--clr-accent-dark);
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.btn-calendar:hover {
+    background: var(--clr-accent);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+    .schedule-item { grid-template-columns: 1fr; gap: 2px; }
+    .btn-calendar { width: 100%; }
 }
 
 .invite-message {
@@ -748,11 +876,102 @@ p, li, .location-address, .contact-text {
 }
 
 /* Guestbook Form Grid Update */
-.guestbook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); max-width: 1000px; margin: 0 auto; align-items: stretch; }
-@media (max-width: 768px) { .guestbook-grid { grid-template-columns: 1fr; } }
-.wish-form-wrapper, .wishes-list-wrapper { padding: var(--space-2xl); display: flex; flex-direction: column; }
-.wishes-list-wrapper { height: 600px; }
-.wishes-scroll-container { flex: 1; overflow-y: auto; padding-right: 8px; margin-bottom: 16px; }
+.wishes-section {
+    width: min(100vw, 1168px);
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+.guestbook-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    gap: var(--space-2xl);
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+    align-items: stretch;
+}
+.wish-form-wrapper, .wishes-list-wrapper {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    overflow: hidden;
+    padding: var(--space-2xl);
+    display: flex;
+    flex-direction: column;
+}
+.wishes-scroll-container {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 8px;
+    margin-bottom: 16px;
+    scrollbar-gutter: stable;
+}
+@media (max-width: 768px) {
+    .wishes-section { width: 100%; margin-left: 0; transform: none; }
+    .guestbook-grid { grid-template-columns: 1fr; }
+    .wish-form-wrapper { height: auto; overflow: visible; }
+    .wishes-list-wrapper { height: min(600px, 75vh); min-height: 440px; }
+}
+
+.firebase-status {
+    margin: 0;
+    padding: 40px 16px;
+    color: var(--clr-text-secondary);
+    text-align: center;
+}
+
+.firebase-status.is-error {
+    color: var(--clr-accent-dark);
+}
+
+.music-btn {
+    animation: none;
+}
+
+.music-disc {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #fff 0 8%, #8f3f4d 9% 18%, #c86373 19% 48%, #a94e5d 49% 52%, #d67d89 53% 100%);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.14);
+    transform: translateZ(0);
+}
+
+.music-btn.playing {
+    animation: spin 4s linear infinite;
+}
+
+.music-btn.playing .music-disc {
+    animation: music-disc-spin 2.8s linear infinite;
+}
+
+.music-btn:not(.playing) .music-disc {
+    animation: none;
+}
+
+.music-disc .music-icon {
+    color: #fff;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+@keyframes music-disc-spin {
+    to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .music-btn.playing .music-disc { animation: none; }
+}
 .wishes-scroll-container::-webkit-scrollbar { width: 6px; }
 .wishes-scroll-container::-webkit-scrollbar-track { background: rgba(214, 125, 137, 0.1); border-radius: 4px; }
 .wishes-scroll-container::-webkit-scrollbar-thumb { background: var(--clr-accent); border-radius: 4px; }
@@ -1704,7 +1923,33 @@ p, li, .location-address, .contact-text {
 
 /* Music Player */
 .music-player { position: fixed; bottom: 30px; right: 30px; z-index: 1000; }
-.music-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--clr-accent); color: white; border: none; box-shadow: 0 4px 15px rgba(214, 125, 137, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: all 0.3s ease; animation: pulse 2s infinite; }
+.music-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--clr-accent); color: white; border: none; box-shadow: 0 4px 15px rgba(214, 125, 137, 0.4); cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; transition: all 0.3s ease; animation: none; }
 .music-btn.playing { animation: spin 4s linear infinite; }
 @keyframes spin { 100% { transform: rotate(360deg); } }
+
+@media (max-width: 768px) {
+    .brand-monogram {
+        flex-basis: 32px;
+        width: 32px;
+        height: auto;
+        font-size: 0.84rem;
+    }
+}
 @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(214, 125, 137, 0.7); } 70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(214, 125, 137, 0); } 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(214, 125, 137, 0); } }
+
+/* Keep the control stationary while the record spins during playback. */
+.music-disc {
+    background:
+        conic-gradient(from 20deg, rgba(255,255,255,0.7) 0 7deg, transparent 7deg 180deg, rgba(255,255,255,0.35) 180deg 187deg, transparent 187deg),
+        radial-gradient(circle, #fff 0 8%, #8f3f4d 9% 18%, #c86373 19% 48%, #a94e5d 49% 52%, #d67d89 53% 100%);
+    transform-origin: center;
+    will-change: transform;
+}
+
+.music-btn.playing .music-disc {
+    animation: music-disc-spin 2.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .music-btn.playing .music-disc { animation: none; }
+}

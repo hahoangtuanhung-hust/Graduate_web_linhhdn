@@ -1,5 +1,4 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -13,7 +12,6 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const db = getFirestore(app);
 const wishesCol = collection(db, "wishes");
 
@@ -52,15 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Play background music automatically upon opening
             const autoMusic = document.getElementById('bg-music');
-            const autoMusicToggle = document.getElementById('music-toggle');
             if (autoMusic) {
                 autoMusic.volume = 0.5;
-                autoMusic.play().then(() => {
-                    if (autoMusicToggle) {
-                        autoMusicToggle.classList.add('playing');
-                        autoMusicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
-                    }
-                }).catch(e => console.log("Music play blocked:", e));
+                autoMusic.play().then(syncMusicControl).catch(e => console.log("Music play blocked:", e));
             }
 
             // Confetti explosion effect
@@ -73,50 +65,64 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Trigger reveal for hero elements
                 const heroElements = document.querySelectorAll('.hero .fade-up');
                 heroElements.forEach(el => el.classList.add('visible'));
-            }, 900);
+            }, 1100);
         });
     }
 
     // 3. Background Music Logic
-    const musicPlayer = document.getElementById('music-toggle');
+    const musicToggle = document.getElementById('music-toggle');
     const bgMusic = document.getElementById('bg-music');
-    let isPlaying = false;
+
+    const syncMusicControl = () => {
+        if (!musicToggle || !bgMusic) return;
+        const isPlaying = !bgMusic.paused;
+        musicToggle.classList.toggle('playing', isPlaying);
+        musicToggle.setAttribute('aria-pressed', String(isPlaying));
+        musicToggle.setAttribute('aria-label', isPlaying ? 'Tạm dừng nhạc' : 'Phát nhạc');
+        musicToggle.title = isPlaying ? 'Tạm dừng nhạc' : 'Phát nhạc';
+        musicToggle.dataset.state = isPlaying ? 'playing' : 'paused';
+    };
     
     // Auto-play attempt on first interaction with the document (browsers block autoplay without interaction)
     const startAudioOnFirstInteraction = () => {
-        if (!isPlaying) {
+        if (bgMusic && bgMusic.paused) {
             bgMusic.volume = 0.5; // Soft volume
-            bgMusic.play().then(() => {
-                isPlaying = true;
-                musicPlayer.classList.add('playing');
-            }).catch(e => console.log("Autoplay blocked. User needs to click play manually."));
+            bgMusic.play().then(syncMusicControl).catch(() => {
+                console.log("Autoplay blocked. User needs to click play manually.");
+            });
         }
         document.removeEventListener('click', startAudioOnFirstInteraction);
         document.removeEventListener('scroll', startAudioOnFirstInteraction);
     };
 
-    document.addEventListener('click', startAudioOnFirstInteraction, { once: true });
-    document.addEventListener('scroll', startAudioOnFirstInteraction, { once: true });
+    if (bgMusic && musicToggle) {
+        document.addEventListener('click', startAudioOnFirstInteraction, { once: true });
+        document.addEventListener('scroll', startAudioOnFirstInteraction, { once: true });
+        musicToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.removeEventListener('click', startAudioOnFirstInteraction);
+            document.removeEventListener('scroll', startAudioOnFirstInteraction);
 
-    // Manual toggle
-    musicPlayer.addEventListener('click', (e) => {
-        e.stopPropagation(); // prevent triggering the document click again
-        if (isPlaying) {
-            bgMusic.pause();
-            musicPlayer.classList.remove('playing');
-            isPlaying = false;
-        } else {
-            bgMusic.volume = 0.5;
-            bgMusic.play();
-            musicPlayer.classList.add('playing');
-            isPlaying = true;
-        }
-    });
+            if (bgMusic.paused) {
+                bgMusic.volume = 0.5;
+                bgMusic.play().then(syncMusicControl).catch(() => syncMusicControl());
+            } else {
+                bgMusic.pause();
+                syncMusicControl();
+            }
+        });
+        bgMusic.addEventListener('play', syncMusicControl);
+        bgMusic.addEventListener('pause', syncMusicControl);
+        bgMusic.addEventListener('ended', syncMusicControl);
+        bgMusic.addEventListener('error', syncMusicControl);
+        syncMusicControl();
+    }
 
     // 3. Guestbook Logic (Firebase Firestore)
     const wishForm = document.getElementById('wish-form');
     const wishesList = document.getElementById('wishes-list');
     const wishesCountEl = document.getElementById('wishes-count');
+    wishesList.setAttribute('aria-live', 'polite');
     
     let allWishes = [];
 
@@ -131,20 +137,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Cannot deselect if it's the only one
                 if (selectedEmojis.length > 1) {
                     btn.classList.remove('active');
+                    btn.setAttribute('aria-pressed', 'false');
                     selectedEmojis = selectedEmojis.filter(e => e !== emoji);
                 }
             } else {
-                if (selectedEmojis.length < 3) { // limit to 3 max
-                    btn.classList.add('active');
-                    selectedEmojis.push(emoji);
-                } else {
-                    // Remove first added to add new
-                    const firstEmoji = selectedEmojis.shift();
-                    const firstBtn = document.querySelector(`.emoji-btn[data-emoji="${firstEmoji}"]`);
-                    if(firstBtn) firstBtn.classList.remove('active');
-                    btn.classList.add('active');
-                    selectedEmojis.push(emoji);
-                }
+                btn.classList.add('active');
+                btn.setAttribute('aria-pressed', 'true');
+                selectedEmojis.push(emoji);
             }
         });
     });
@@ -326,7 +325,10 @@ document.addEventListener('DOMContentLoaded', () => {
         renderWishesList();
     }, (error) => {
         console.error("Lỗi khi tải lời chúc từ Firebase: ", error);
-        wishesList.innerHTML = '<p style="text-align:center; color:#D67D89; padding: 40px 0;">Chưa thể kết nối máy chủ Firebase. Bạn vui lòng thử lại sau nhé!</p>';
+        const message = error.code === 'permission-denied'
+            ? 'Firestore chưa cấp quyền đọc lời chúc.'
+            : 'Chưa thể kết nối Firebase. Vui lòng kiểm tra mạng và thử lại.';
+        wishesList.innerHTML = `<p class="firebase-status is-error" role="alert">${message}</p>`;
     });
 
     wishForm.addEventListener('submit', async (e) => {
@@ -372,10 +374,14 @@ document.addEventListener('DOMContentLoaded', () => {
             
         } catch (error) {
             console.error("Lỗi khi gửi lời chúc: ", error);
-            submitBtn.innerHTML = '<span>Lỗi kết nối! Thử lại</span>';
+            const errorLabel = error.code === 'permission-denied'
+                ? 'Chưa được cấp quyền gửi'
+                : 'Gửi thất bại, thử lại';
+            submitBtn.innerHTML = `<span>${errorLabel}</span>`;
             submitBtn.style.opacity = '1';
             setTimeout(() => {
                 submitBtn.innerHTML = originalBtnContent;
+                submitBtn.style.background = '';
                 submitBtn.disabled = false;
             }, 3000);
         }
@@ -479,28 +485,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', updateActiveNavLink, { passive: true });
 
-    // 7. Music Logic
-    const bgMusic = document.getElementById('bg-music');
-    const musicToggle = document.getElementById('music-toggle');
-    if (bgMusic && musicToggle) {
-        musicToggle.addEventListener('click', () => {
-            if (bgMusic.paused) {
-                bgMusic.play();
-                musicToggle.classList.add('playing');
-                musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
-            } else {
-                bgMusic.pause();
-                musicToggle.classList.remove('playing');
-                musicToggle.innerHTML = '<span class="music-icon">🎵</span>';
-            }
-        });
-        
-        document.body.addEventListener('click', function initAudio() {
-            bgMusic.play().then(() => {
-                musicToggle.classList.add('playing');
-                musicToggle.innerHTML = '<span class="music-icon">⏸️</span>';
-            }).catch(e => console.log("Autoplay prevented"));
-            document.body.removeEventListener('click', initAudio);
-        }, { once: true });
-    }
 });

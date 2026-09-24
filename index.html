@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <!-- Mới: Font sang trọng cho thiệp (Cormorant Infant & Great Vibes) và Inter cho văn bản nhỏ -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Infant:wght@300;400;500;600;700&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=2.7">
 </head>
 <body>
     <!-- Interactive Envelope Opening Overlay Screen -->
@@ -41,7 +41,7 @@
                     <div class="seal-ribbon"></div>
                     <div class="wax-seal">
                         <div class="seal-inner">
-                            <span class="seal-initials">NL</span>
+                            <span class="seal-initials" aria-hidden="true"><span>N</span><span>L</span></span>
                         </div>
                     </div>
                 </div>
@@ -63,15 +63,15 @@
         <nav class="navbar" id="navbar" aria-label="Menu điều hướng chính">
             <div class="nav-container">
                 <a href="#hero" class="nav-brand" aria-label="Về đầu trang">
-                    <span class="brand-monogram">NL</span>
+                    <span class="brand-monogram" aria-hidden="true"><span>N</span><span>L</span></span>
                     <span class="brand-name">Ngọc Linh</span>
                 </a>
                 
                 <ul class="nav-links">
                     <li><a href="#hero" class="nav-item active"><span class="nav-icon">🎓</span><span class="nav-text">Thư Mời</span></a></li>
-                    <li><a href="#event-details" class="nav-item"><span class="nav-icon">⏰</span><span class="nav-text">Thời Gian</span></a></li>
-                    <li><a href="#countdown" class="nav-item"><span class="nav-icon">⏳</span><span class="nav-text">Đếm Ngược</span></a></li>
+                    <li><a href="#event-details" class="nav-item"><span class="nav-icon">⏰</span><span class="nav-text">Thông Tin</span></a></li>
                     <li><a href="#map" class="nav-item"><span class="nav-icon">📍</span><span class="nav-text">Bản Đồ</span></a></li>
+                    <li><a href="#countdown" class="nav-item"><span class="nav-icon">⏳</span><span class="nav-text">Đếm Ngược</span></a></li>
                     <li><a href="#gallery" class="nav-item"><span class="nav-icon">📸</span><span class="nav-text">Kỷ Niệm</span></a></li>
                     <li><a href="#wishes" class="nav-item"><span class="nav-icon">💌</span><span class="nav-text">Lời Chúc</span></a></li>
                 </ul>
@@ -84,16 +84,6 @@
     <div class="bg-shape shape-2"></div>
     <div class="bg-shape shape-3"></div>
     
-    <!-- Music Player (Floating) -->
-    <div class="music-player" id="music-toggle" title="Bật/Tắt Nhạc">
-        <div class="disc">
-            <span class="music-icon">🎵</span>
-        </div>
-        <audio id="bg-music" loop>
-            <source src="audio/bg-music.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
     <!-- Main Content -->
     <main class="invitation-wrapper">
         <header class="hero section-padding" id="hero">
@@ -137,7 +127,7 @@
                             <span class="time">09:30 - 10:30</span>
                         </div>
                     </div>
-                    
+
                     <div class="elegant-divider-vertical"></div>
 
                     <div class="info-block">
@@ -145,6 +135,55 @@
                         <p class="location-primary">ĐH KINH TẾ TP.HCM - CƠ SỞ A</p>
                         <p class="location-sub">59C Đường Nguyễn Đình Chiểu,<br>Xuân Hòa, Hồ Chí Minh</p>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location & Map Section -->
+        <section class="location-map-section section-padding" id="map">
+            <div class="glass-card map-card fade-up">
+                <span class="icon-location">📍</span>
+                <p class="location-tagline">ĐỊA ĐIỂM</p>
+                <h3 class="map-title">Đại học Kinh tế TP.HCM - Cơ sở A</h3>
+                <p class="map-address"><strong>Đại học Kinh tế TP.HCM - Cơ sở A:</strong> 59C Đường Nguyễn Đình Chiểu, Xuân Hòa, Hồ Chí Minh</p>
+
+                <div class="schedule-block">
+                    <p class="schedule-date">26.09.2026</p>
+                    <h3 class="schedule-title">Lịch Trình Chi Tiết</h3>
+                    <div class="schedule-list">
+                        <div class="schedule-item">
+                            <time datetime="2026-09-26T09:30:00+07:00">09:30 - 10:30</time>
+                            <span>Đón tiếp, chụp ảnh kỷ niệm</span>
+                        </div>
+                        <div class="schedule-item">
+                            <time datetime="2026-09-26T11:00:00+07:00">11:00 trở đi</time>
+                            <span>Tiệc thân mật</span>
+                        </div>
+                    </div>
+                    <a class="btn-calendar" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=L%E1%BB%85%20T%E1%BB%91t%20Nghi%E1%BB%87p%20-%20H%C3%A0%20%C4%90%E1%BB%97%20Ng%E1%BB%8Dc%20Linh&amp;dates=20260926T093000/20260926T103000&amp;ctz=Asia%2FHo_Chi_Minh&amp;details=09%3A30%20-%2010%3A30%3A%20%C4%90%C3%B3n%20ti%E1%BA%BFp%2C%20ch%E1%BB%A5p%20%E1%BA%A3nh%20k%E1%BB%B7%20ni%E1%BB%87m.%0A11%3A00%20tr%E1%BB%9F%20%C4%91i%3A%20Ti%E1%BB%87c%20th%C3%A2n%20m%E1%BA%ADt.&amp;location=59C%20Nguy%E1%BB%85n%20%C4%90%C3%ACnh%20Chi%E1%BB%83u%2C%20Xu%C3%A2n%20H%C3%B2a%2C%20H%E1%BB%93%20Ch%C3%AD%20Minh" target="_blank" rel="noopener noreferrer">
+                        <span aria-hidden="true">📅</span>
+                        <span>Lưu vào Google Calendar</span>
+                    </a>
+                </div>
+                
+                <!-- Google Maps Responsive Container -->
+                <div class="map-frame-wrapper">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.441165853856!2d106.69209327504198!3d10.783082789366082!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f36c74caa99%3A0x743c446a2eef20a5!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBLaW5oIHThur8gVFAuSENNIC0gQ8ahIHPhu58gQQ!5e1!3m2!1svi!2s!4v1790263292694!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" 
+                        class="map-iframe" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Bản đồ Đại học Kinh tế TP.HCM - Cơ sở A">
+                    </iframe>
+                </div>
+
+                <!-- Open in Google Maps Button -->
+                <div class="map-actions">
+                    <a href="https://maps.google.com/?q=Đại+học+Kinh+tế+TP.HCM+Cơ+sở+A+59C+Nguyễn+Đình+Chiểu" target="_blank" rel="noopener noreferrer" class="btn-directions">
+                        <span class="btn-map-icon">🗺️</span>
+                        <span>Mở chỉ đường trên Google Maps</span>
+                    </a>
                 </div>
             </div>
         </section>
@@ -177,43 +216,6 @@
                     </div>
                 </div>
                 <p class="countdown-note" id="countdown-status">✨ Hẹn gặp mọi người vào 09:30 ngày 26.09.2026&nbsp;nhé!&nbsp;✨</p>
-            </div>
-        </section>
-
-        <!-- Location & Map Section -->
-        <section class="location-map-section section-padding" id="map">
-            <div class="glass-card map-card fade-up">
-                <span class="icon-location">📍</span>
-                <p class="location-tagline">HƯỚNG DẪN ĐƯỜNG ĐI</p>
-                <h3 class="map-title">Bản Đồ Đến Trường (UEH Cơ sở A)</h3>
-                <p class="map-address"><strong>Đại học Kinh tế TP.HCM - Cơ sở A:</strong> 59C Đường Nguyễn Đình Chiểu, Xuân Hòa, Hồ Chí Minh</p>
-                
-                <div class="gates-info">
-                    <div class="gate-item">
-                        <span class="gate-badge">Lưu ý</span>
-                        <span>Tiệc thân mật: 11:00 trở đi</span>
-                    </div>
-                </div>
-
-                <!-- Google Maps Responsive Container -->
-                <div class="map-frame-wrapper">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.46781298822!2d106.69055861533418!3d10.781190692318464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752f3692af0001%3A0x868b4198085d38a0!2zVHLGsOG7nW5nIMSQ4bqhaSBo4buNYyBLaW5oIHThur8gVFAuSENNIC0gQ8ahIHPhu58gQQ!5e0!3m2!1svi!2svn!4v1690000000000!5m2!1svi!2svn" 
-                        class="map-iframe" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Bản đồ Đại học Kinh tế TP.HCM - Cơ sở A">
-                    </iframe>
-                </div>
-
-                <!-- Open in Google Maps Button -->
-                <div class="map-actions">
-                    <a href="https://maps.google.com/?q=Đại+học+Kinh+tế+TP.HCM+Cơ+sở+A+59C+Nguyễn+Đình+Chiểu" target="_blank" rel="noopener noreferrer" class="btn-directions">
-                        <span class="btn-map-icon">🗺️</span>
-                        <span>Mở chỉ đường trên Google Maps</span>
-                    </a>
-                </div>
             </div>
         </section>
 
@@ -252,12 +254,12 @@
                         <div class="form-group emoji-group">
                             <label>Chọn biểu tượng cảm xúc</label>
                             <div class="emoji-selector" id="emoji-selector">
-                                <button type="button" class="emoji-btn active" data-emoji="🎓">🎓 Mũ Cử Nhân</button>
-                                <button type="button" class="emoji-btn" data-emoji="💐">💐 Bó Hoa</button>
-                                <button type="button" class="emoji-btn" data-emoji="🎉">🎉 Pháo Giấy</button>
-                                <button type="button" class="emoji-btn" data-emoji="🚀">🚀 Thăng Tiến</button>
-                                <button type="button" class="emoji-btn" data-emoji="🌟">🌟 Tỏa Sáng</button>
-                                <button type="button" class="emoji-btn" data-emoji="💖">💖 Yêu Thương</button>
+                                <button type="button" class="emoji-btn active" data-emoji="🎓" aria-pressed="true">🎓 Mũ Cử Nhân</button>
+                                <button type="button" class="emoji-btn" data-emoji="💐" aria-pressed="false">💐 Bó Hoa</button>
+                                <button type="button" class="emoji-btn" data-emoji="🎉" aria-pressed="false">🎉 Pháo Giấy</button>
+                                <button type="button" class="emoji-btn" data-emoji="🚀" aria-pressed="false">🚀 Thăng Tiến</button>
+                                <button type="button" class="emoji-btn" data-emoji="🌟" aria-pressed="false">🌟 Tỏa Sáng</button>
+                                <button type="button" class="emoji-btn" data-emoji="💖" aria-pressed="false">💖 Yêu Thương</button>
                             </div>
                         </div>
 
@@ -299,15 +301,15 @@
     </main>
 
     <!-- Music Player -->
-    <div class="music-player fade-up">
-        <button id="music-toggle" class="music-btn" title="Phát/Tạm dừng nhạc">
-            <span class="music-icon">🎵</span>
+    <div class="music-player">
+        <button id="music-toggle" class="music-btn" type="button" title="Phát nhạc" aria-label="Phát nhạc" aria-pressed="false">
+            <span class="music-disc" aria-hidden="true"><span class="music-icon">♪</span></span>
         </button>
         <audio id="bg-music" loop>
             <source src="audio/bg-music.mp3" type="audio/mpeg">
         </audio>
     </div>
 
-    <script type="module" src="script.js?v=1.6"></script>
+    <script type="module" src="script.js?v=1.8"></script>
 </body>
 </html>
