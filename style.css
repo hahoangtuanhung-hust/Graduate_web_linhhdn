@@ -894,12 +894,19 @@ p, li, .location-address, .contact-text {
 }
 .wish-form-wrapper, .wishes-list-wrapper {
     width: 100%;
-    height: auto;
     min-height: 0;
     overflow: hidden;
     padding: 24px;
     display: flex;
     flex-direction: column;
+}
+
+.wish-form-wrapper {
+    height: auto;
+}
+
+.wishes-list-wrapper {
+    height: 650px;
 }
 .wishes-scroll-container {
     flex: 1 1 auto;
